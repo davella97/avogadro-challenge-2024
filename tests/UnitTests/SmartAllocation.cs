@@ -10,14 +10,15 @@ public class SmartAllocationTests
     public void TestSmart1AgainstDumb()
     {
         var slotWidth = 50f;
-        var numX = 4;
-        var numY = 4;
-        var numZ = 4;
+        int n = 4; //small change to simplify the tests (it is based on the text ‘NX NY NZ’)” 
+        var numX = n;
+        var numY = n;
+        var numZ = n;
         var totalWidthX = slotWidth * numX;
         var totalWidthY = slotWidth * numY;
 
         // you might want to work on a fixed distribution of container weight 
-        var containers = ContainerGenerator.RandomGenerate(64, 100, 0.1f);
+        var containers = ContainerGenerator.RandomGenerate(n*n*n, 100, 0.1f);
         var vesselDumb = Vessel.Build(slotWidth, numX, numY, numZ);
         ContainerAllocator.DumbAllocateBySequence(vesselDumb, containers);
         var dumbCenterOfMass = CenterOfMassCalculator.Calculate(vesselDumb);
