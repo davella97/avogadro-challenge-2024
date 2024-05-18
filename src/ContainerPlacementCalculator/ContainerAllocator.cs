@@ -4,7 +4,6 @@ namespace ContainerPlacementCalculator
 {
     public static class ContainerAllocator
     {
-<<<<<<< HEAD
         
         private static List<Container> containersSorter(List<Container> containers){
             Container swapContainer;
@@ -98,21 +97,6 @@ namespace ContainerPlacementCalculator
                         }
                     }
                 }  */
-=======
-        private static List<Container> containersSorter(List<Container> containers){
-    Container swapContainer;
-    for(int i = 0; i < containers.Count; i++){
-        bool swap = false;
-        for(int j = 0; j < containers.Count; j++){
-            if (containers[j].Weight < containers[j + 1].Weight){
-                swapContainer = containers[j];
-                containers[j] = containers[j + 1];
-                containers[j + 1] = swapContainer;
-                swap = true;
-            }
-            if (swap)
-                break;
->>>>>>> 55b9e43560f578e8ca2e297568d758a514443f37
         }
     }
     return containers;
