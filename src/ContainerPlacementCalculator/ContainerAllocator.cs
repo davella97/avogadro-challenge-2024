@@ -39,9 +39,12 @@ public static void SmartAllocate1(Vessel vessel, List<Container> containers)
     //       I container più pesanti al centro, si fa a strato di cipolla, si parte dal centro, si sviluppa in verticale e poi si passa ad uno strato più esterno.
     int flagForm = 1;
     int index = 0;
-    if (lengthX % 2 == 0 && lengthY % 2 == 0)
+    int startCoordinate = Math.Ceiling(lengthX / 2) ;
+    int lastCoordinate = Math.Ceiling(lengthY / 2);
+    if (lengthX % 2 == 0 && lengthY % 2 == 0) //controllo se il centro è un 2x2 o un 1x1
     {
-        flagForm = 0;
+        int startCoordinate = (lengthX / 2) - 1;
+        int lastCoordinate = lengthY / 2;
     }
     if(flagForm == 0)
     {
@@ -63,7 +66,7 @@ public static void SmartAllocate1(Vessel vessel, List<Container> containers)
                     i++;
                 }
                 i = 1;
-                for (int y = 0; y < actualSquareSide-2 || y < lengthY; y++) //deve fare tutti i container sulle x (sia al fondo che all'inizio)
+                for (int y = 0; y < actualSquareSide-2 || y < lengthY; y++) //deve fare tutti i container sulle y (sia al fondo che all'inizio)
                 {
                     int x1 = startCoordinate - repetition + 1;
                     int x2 = lastCoordinate + repetition - 1;
