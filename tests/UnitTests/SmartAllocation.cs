@@ -39,9 +39,9 @@ public class SmartAllocationTests
 
       
 
-        Math.Abs(smartCenterOfMassRelativeToIdealPosition.X).Should().BeLessThan(dumbCenterOfMassRelativeToIdealPosition.X);
-        Math.Abs(smartCenterOfMassRelativeToIdealPosition.Y).Should().BeLessThan(dumbCenterOfMassRelativeToIdealPosition.Y);
-        Math.Abs(smartCenterOfMassRelativeToIdealPosition.Z).Should().BeLessThan(dumbCenterOfMassRelativeToIdealPosition.Z);
+        Math.Abs(smartCenterOfMassRelativeToIdealPosition.X).Should().BeLessThan(Math.Abs(dumbCenterOfMassRelativeToIdealPosition.X));
+        Math.Abs(smartCenterOfMassRelativeToIdealPosition.Y).Should().BeLessThan(Math.Abs(dumbCenterOfMassRelativeToIdealPosition.Y));
+        Math.Abs(smartCenterOfMassRelativeToIdealPosition.Z).Should().BeLessThan(Math.Abs(dumbCenterOfMassRelativeToIdealPosition.Z));
 
 
     }
