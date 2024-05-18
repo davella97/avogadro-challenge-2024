@@ -4,48 +4,52 @@ namespace ContainerPlacementCalculator
 {
     public static class ContainerAllocator
     {
-
-        private static List<Container> ContainersSorter(List<Container> __containers) {
+        //legend :
+        //variables without '_' in front are local variables, 
+        //variables with '_' in front are function parameters, 
+        //variables with '__' in front are global variables.
+        private static List<Container> ContainersSorter(List<Container> _containers) {
             //method that allows sorting the containers in order of weight from highest to lowest
-            int nCont = __containers.Count;
+            int nCont = _containers.Count;
             bool swap;
             do
             {
                 swap = false;
                 for (int i = 0; i < nCont - 1; i++)
                 {
-                    if (__containers[i].Weight < __containers[i + 1].Weight)
+                    if (_containers[i].Weight < _containers[i + 1].Weight)
                     {
-                        var temp = __containers[i];
-                        __containers[i] = __containers[i + 1];
-                        __containers[i + 1] = temp;
+                        var temp = _containers[i];
+                        _containers[i] = _containers[i + 1];
+                        _containers[i + 1] = temp;
 
                         swap = true;
                     }
                 }
                 nCont--; 
             } while (swap);
-            return __containers;
+            return _containers;
         }
         //DONE : implement this method
-        public static void SmartAllocate1(Vessel vessel, List<Container> containers)
+        public static void SmartAllocate1(Vessel _vessel, List<Container> _containers)
         {
-            List<Container> orderedConteiners = ContainersSorter(containers);
-            var slotsNumber = vessel.Slots.GetLength(0) * vessel.Slots.GetLength(1) * vessel.Slots.GetLength(2);
+            List<Container> orderedConteiners = ContainersSorter(_containers);
+            var slotsNumber = _vessel.Slots.GetLength(0) * _vessel.Slots.GetLength(1) * _vessel.Slots.GetLength(2);
             if (orderedConteiners.Count != slotsNumber)
             {
-                throw new ArgumentException($"number of containers is {containers.Count} number of slots {slotsNumber}. They are supposed ot be the same");
+                throw new ArgumentException($"number of containers is {_containers.Count} number of slots {slotsNumber}. They are supposed ot be the same");
             }
-            var lengthX = vessel.Slots.GetLength(0);
-            var lengthY = vessel.Slots.GetLength(1);
-            var lengthZ = vessel.Slots.GetLength(2);
+            var lengthX = _vessel.Slots.GetLength(0);
+            var lengthY = _vessel.Slots.GetLength(1);
+            var lengthZ = _vessel.Slots.GetLength(2);
             //DONE : generalize algorithm 
             int index = 0;
             int startCoordinate = (int) Math.Ceiling(((double) lengthX / 2) - 1);
             int lastCoordinate = lengthY / 2;
-            //logic :  we proceed in rings from the inside (center) to the outside (outermost ring),
-            //         we place the heaviest boxes in the current upper left corner and then
-            //         the following box in the current lower right corner.
+            //logic :
+            //we proceed in rings from the inside (center) to the outside (outermost ring),
+            //we place the heaviest boxes in the current upper left corner and then
+            //the following box in the current lower right corner.
             for (int z = 0; z < lengthZ; z++) 
             {
                 for (int repetition = 1; repetition < (lengthY / 2) + 1; repetition++)
@@ -56,9 +60,9 @@ namespace ContainerPlacementCalculator
                     int y2 = lastCoordinate + repetition - 1;
                     for (int x = 0; x < actualSquareSide && x < lengthX; x++) 
                     {
-                        vessel.Slots[(startCoordinate - repetition + 1) + i, y1,  z].Container = orderedConteiners[index];
+                        _vessel.Slots[(startCoordinate - repetition + 1) + i, y1,  z].Container = orderedConteiners[index];
                         index++;
-                        vessel.Slots[(lastCoordinate + repetition - 1) - i, y2, z].Container = orderedConteiners[index];
+                        _vessel.Slots[(lastCoordinate + repetition - 1) - i, y2, z].Container = orderedConteiners[index];
                         index++;
                         i++;
                     }
@@ -67,9 +71,9 @@ namespace ContainerPlacementCalculator
                     int x2 = lastCoordinate + repetition - 1;
                     for (int y = 0; y < actualSquareSide - 2 && y < lengthY; y++) 
                     {
-                        vessel.Slots[x1, (startCoordinate - repetition + 1) + i, z].Container = orderedConteiners[index];
+                        _vessel.Slots[x1, (startCoordinate - repetition + 1) + i, z].Container = orderedConteiners[index];
                         index++;
-                        vessel.Slots[x2, (lastCoordinate + repetition - 1) - i, z].Container = orderedConteiners[index];
+                        _vessel.Slots[x2, (lastCoordinate + repetition - 1) - i, z].Container = orderedConteiners[index];
                         index++;
                         i++;
                     }
