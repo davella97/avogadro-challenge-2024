@@ -50,9 +50,9 @@ public static void SmartAllocate1(Vessel vessel, List<Container> containers)
     {
         int startCoordinate = (lengthX / 2) - 1;
         int lastCoordinate = lengthY / 2;
-        for(int repetition = 1; repetition < (lengthY/2)+1; repetition++) //anello attuale preso in considerazione, da interno verso esterno 
+        for(int z = 0; z < lengthZ; z++) //anello attuale preso in considerazione, da interno verso esterno 
         {
-            for (int z = 0; z < lengthZ; z++) {
+            for (int repetition = 1; repetition < (lengthY/2)+1; repetition++ ) {
                 int actualSquareSide = 2 * repetition;
                 int i = 0;
                 for (int x = 0; x < actualSquareSide || x < lengthX; x++) //deve fare tutti i container sulle x (sia al fondo che all'inizio)
