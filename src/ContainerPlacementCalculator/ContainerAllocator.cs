@@ -42,6 +42,7 @@ namespace ContainerPlacementCalculator
             var lengthX = _vessel.Slots.GetLength(0);
             var lengthY = _vessel.Slots.GetLength(1);
             var lengthZ = _vessel.Slots.GetLength(2);
+            var n = lengthX;
             //DONE : generalize algorithm 
             int index = 0;
             int startCoordinate = (int) Math.Ceiling(((double) lengthX / 2) - 1);
@@ -52,9 +53,14 @@ namespace ContainerPlacementCalculator
             //the following box in the current lower right corner.
             for (int z = 0; z < lengthZ; z++) 
             {
-                for (int repetition = 1; repetition < (lengthY / 2) + 1; repetition++)
+                int actualSquareSide = 2;
+                if (startCoordinate == lastCoordinate)
+                    actualSquareSide = 1;
+                int nRepetition = (lengthY / 2) + 1;
+                if (n % 2 != 0)
+                    nRepetition = (lengthY / 2) + 2;
+                for (int repetition = 1; repetition < nRepetition; repetition++)
                 {
-                    int actualSquareSide = 2 * repetition;
                     int i = 0;
                     int y1 = startCoordinate - repetition + 1;
                     int y2 = lastCoordinate + repetition - 1;
@@ -62,8 +68,11 @@ namespace ContainerPlacementCalculator
                     {
                         _vessel.Slots[(startCoordinate - repetition + 1) + i, y1,  z].Container = orderedConteiners[index];
                         index++;
-                        _vessel.Slots[(lastCoordinate + repetition - 1) - i, y2, z].Container = orderedConteiners[index];
-                        index++;
+                        if (y1 != y2)
+                        {
+                            _vessel.Slots[(lastCoordinate + repetition - 1) - i, y2, z].Container = orderedConteiners[index];
+                            index++;
+                        }
                         i++;
                     }
                     i = 1;
@@ -77,6 +86,7 @@ namespace ContainerPlacementCalculator
                         index++;
                         i++;
                     }
+                    actualSquareSide += 2;
                 }
             }
         }
